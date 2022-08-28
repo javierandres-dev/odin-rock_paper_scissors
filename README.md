@@ -4,7 +4,6 @@ This project is based on "Project: Rock Paper Scissors" proposed by [The Odin Pr
 How does it look? Take a look at [Odin Rock Paper Scissors]()
 ## Stack
 - HTML
-- CSS
 - JavaScript
 ---
 ## Software Developer
