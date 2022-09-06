@@ -1,93 +1,90 @@
 'use strict';
-let exit = false;
-const options = ['rock', 'paper', 'scissors'];
+const d = document,
+  options = ['rock', 'paper', 'scissors'];
 
-const getPlayerChoice = () => {
-  return prompt('Type your choice: "rock, paper or scissors"');
-};
+let gameOver = false,
+  round = 0,
+  limit = 3,
+  playerScore = 0,
+  computerScore = 0,
+  draws = 0;
+
+const $notify = d.querySelector('.notify'),
+  $btns = d.querySelectorAll('button');
+
+$btns.forEach(($btn) => {
+  $btn.addEventListener('click', () => {
+    if (!gameOver) playRound($btn.id);
+  });
+});
 
 const getComputerChoice = () => {
   const index = Math.floor(Math.random() * options.length);
   return options[index];
 };
 
-const playRound = (playerSelection, computerSelection) => {
+const playRound = (playerSelection) => {
+  const computerSelection = getComputerChoice();
+  let roundResult = null;
+  round++;
   if (playerSelection === computerSelection) {
-    return [0, 0, 'Tie.'];
+    draws++;
+    roundResult = `⚖️ Tie.`;
   } else {
-    if (playerSelection === 'paper' && computerSelection === 'rock')
-      return [1, 0, 'You Win! Paper beats Rock'];
-    if (playerSelection === 'rock' && computerSelection === 'paper')
-      return [0, 1, 'You Lose! Paper beats Rock'];
-    if (playerSelection === 'scissors' && computerSelection === 'paper')
-      return [1, 0, 'You Win! Scissors beats Paper'];
-    if (playerSelection === 'paper' && computerSelection === 'scissors')
-      return [0, 1, 'You Lose! Scissors beats Paper'];
-    if (playerSelection === 'rock' && computerSelection === 'scissors')
-      return [1, 0, 'You Win! Rock beats Scissors'];
-    if (playerSelection === 'scissors' && computerSelection === 'rock')
-      return [0, 1, 'You Lose! Rock beats Scissors'];
-  }
-};
-
-const game = () => {
-  let gameOver = false,
-    playerScore = 0,
-    computerScore = 0,
-    limit = 3,
-    draws = 0;
-  for (let i = 0; i < limit; i++) {
-    if (gameOver) break;
-    const playerSelection = getPlayerChoice();
-    if (
-      playerSelection === '' ||
-      playerSelection === null ||
-      (playerSelection !== 'rock' &&
-        playerSelection !== 'paper' &&
-        playerSelection !== 'scissors')
-    ) {
-      alert(`
-        You don't type a valid option.
-        GAME OVER
-      `);
-      gameOver = true;
-    } else {
-      const computerSelection = getComputerChoice();
-      const getResultRound = playRound(playerSelection, computerSelection);
-      if (getResultRound[0] === getResultRound[1]) draws += 1;
-      playerScore += getResultRound[0];
-      computerScore += getResultRound[1];
-      alert(`
-        Round: ${i + 1} of ${limit}
-        Your choice: ${playerSelection}
-        Computer choice: ${computerSelection}
-        In this round: ${getResultRound[2]}
-      `);
+    if (playerSelection === 'paper' && computerSelection === 'rock') {
+      playerScore++;
+      roundResult = `You Win! 🤚 Paper beats Rock ✊`;
+    }
+    if (playerSelection === 'rock' && computerSelection === 'paper') {
+      computerScore++;
+      roundResult = `You Lose! 🤚 Paper beats Rock ✊`;
+    }
+    if (playerSelection === 'scissors' && computerSelection === 'paper') {
+      playerScore++;
+      roundResult = `You Win! ✌️ Scissors beats Paper 🤚`;
+    }
+    if (playerSelection === 'paper' && computerSelection === 'scissors') {
+      computerScore++;
+      roundResult = `You Lose! ✌️ Scissors beats Paper 🤚`;
+    }
+    if (playerSelection === 'rock' && computerSelection === 'scissors') {
+      playerScore++;
+      roundResult = `You Win! ✊ Rock beats Scissors ✌️`;
+    }
+    if (playerSelection === 'scissors' && computerSelection === 'rock') {
+      computerScore++;
+      roundResult = `You Lose! ✊ Rock beats Scissors ✌️`;
     }
   }
-  if (!gameOver) {
-    let you = null;
-    if (playerScore > computerScore) you = 'win';
-    else if (playerScore < computerScore) you = 'lose';
-    else you = 'tie';
-    alert(`
-      SUMMARY
-      --------
-      You ${you}!
-      --------
-      Rounds: ${limit}
-      Draws: ${draws}
-      Player score: ${playerScore}
-      Computer score: ${computerScore}
-    `);
+  if (playerScore === limit || computerScore === limit) {
+    gameOver = true;
+    $btns.forEach(($btn) => $btn.setAttribute('disabled', true));
+    const you = playerScore > computerScore ? 'Win! 🥳' : 'Lose! 🥴';
+    $notify.innerHTML = `
+      <h2 class="subtitle">SUMMARY</h2>
+      You ${you}
+      <ul class="list">
+        <li class="list-item">Total rounds: ${round}</li>
+        <li class="list-item">Draws: ${draws}</li>
+        <li class="list-item">Your score: ${playerScore}</li>
+        <li class="list-item">Computer score: ${computerScore}</li>
+      </ul>
+      <h3 class="title">Game Over</h3>
+      <p class="question">😏 Play again, or fear? 😭</p>
+      <button type="button" id="reload" class="btn again">💪 Again!</button>
+    `;
+    const $reload = d.getElementById('reload');
+    $reload.addEventListener('click', () => {
+      d.location.reload();
+    });
+  } else {
+    $notify.innerHTML = `
+      <h2 class="subtitle">In this round ${roundResult}</h2>
+      <ul class="list">
+        <li class="list-item">Round: ${round} of ${limit}</li>
+        <li class="list-item">Your choice: ${playerSelection}</li>
+        <li class="list-item">Computer choice: ${computerSelection}</li>
+      </ul>
+    `;
   }
 };
-
-do {
-  game();
-  exit = confirm(`
-    Do you want exit?
-    * Press "OK" to exit
-    * Press "Cancel" to play again.
-  `);
-} while (!exit);

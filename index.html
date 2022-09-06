@@ -2,10 +2,26 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Odin Rock Paper Scissors</title>
+    <link rel="stylesheet" href="./style/main.css" />
+    <script src="./script/main.js" defer></script>
+    <title>Rock Paper Scissors</title>
   </head>
   <body>
-    <script src="./script/main.js"></script>
     <noscript>This page requires JavaScript</noscript>
+    <main class="container">
+      <h1 class="title">Rock Paper Scissors</h1>
+      <div class="notify"></div>
+      <div class="cards">
+        <button type="button" class="btn card" id="rock">
+          <span>✊</span> Rock
+        </button>
+        <button type="button" class="btn card" id="paper">
+          <span>🤚</span> Paper
+        </button>
+        <button type="button" class="btn card" id="scissors">
+          <span>✌️</span> Scissors
+        </button>
+      </div>
+    </main>
   </body>
 </html>
