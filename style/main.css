@@ -93,9 +93,6 @@ body {
   text-align: right;
   padding-right: 10px;
   font-size: 13px;
-  position: absolute;
-  bottom: 0;
-  right: 0;
 }
 .link {
   color: lightgrey;
