@@ -1,25 +1,103 @@
-.container {
-  width: 300px;
-  margin: 40px auto;
+body {
+  background-color: black;
+  color: grey;
+  font-family: sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.6;
   text-align: center;
+  height: 100%;
+}
+.container {
+  max-width: 320px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .title {
-}
-.notify {
-}
-.btn {
+  font-size: 25px;
 }
 .cards {
+  display: flex;
+  gap: 10px;
 }
 .card {
+  flex: 1 1 0;
+  background-color: grey;
+  color: black;
+  height: 200px;
+  font-size: 20px;
+  border-radius: 10px;
+  border: none;
+  transition: all 250ms ease-in-out;
+}
+.card:hover {
+  background-color: black;
+  color: grey;
+}
+.emoji {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 70px;
+}
+.notify {
+  color: lightgrey;
+}
+.scores {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+}
+.score {
+  margin: 0;
+  font-size: 16px;
+  color: white;
 }
 .subtitle {
+  font-size: 22px;
+  color: lightgrey;
 }
-.list {
+.details {
+  list-style: none;
+  text-align: left;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 16px;
 }
-.list-item {
+.capi {
+  text-transform: capitalize;
+}
+.disable {
+  cursor: not-allowed;
+  background-color: black;
+  color: grey;
 }
 .question {
+  color: azure;
 }
 .again {
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 20px 40px;
+  background-color: white;
+  color: black;
+  transition: background-color 250ms ease-in-out;
+}
+.again:hover {
+  background-color: lightgrey;
+}
+.footer {
+  text-align: right;
+  padding-right: 10px;
+  font-size: 13px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.link {
+  color: lightgrey;
+  text-decoration: none;
 }
